@@ -1,3 +1,6 @@
+
+
+
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink } from 'react-router-dom';
@@ -10,7 +13,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-blue-600  font-serif shadow-md fixed top-0 left-0 w-full z-50">
+    <nav className="bg-blue-600 font-serif shadow-md fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -55,6 +58,7 @@ function Navbar() {
           <div className="hidden md:block">
             <RouterLink 
               to="/login" 
+              onClick={handleLinkClick} // Close the mobile menu
               className="bg-blue-700 text-white hover:bg-blue-500 px-4 py-2 rounded-md font-semibold">
               Login / Register
             </RouterLink>
@@ -119,6 +123,7 @@ function Navbar() {
             </ScrollLink>
             <RouterLink 
               to="/login" 
+              onClick={handleLinkClick} // Close the mobile menu
               className="w-full bg-blue-700 text-white hover:bg-blue-500 px-4 py-2 rounded-md font-semibold mt-2 block text-center">
               Login / Register
             </RouterLink>
@@ -129,5 +134,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;   
-
+export default Navbar;
