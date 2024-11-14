@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 
-function ItemTodo({ todo, toggleComplete, deleteTodo, editTodo }) {
+function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(todo.text);
 
@@ -10,8 +10,17 @@ function ItemTodo({ todo, toggleComplete, deleteTodo, editTodo }) {
   };
 
   const handleSave = () => {
-    editTodo(todo.id, newText);
-    setIsEditing(false);
+    if (newText.trim()) {
+      editTodo(todo.id, newText);
+      setIsEditing(false);
+    }
+  };
+
+  // This function will handle the Enter key to save the edit
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSave();
+    }
   };
 
   return (
@@ -32,7 +41,7 @@ function ItemTodo({ todo, toggleComplete, deleteTodo, editTodo }) {
             type="text"
             value={newText}
             onChange={(e) => setNewText(e.target.value)}
-            onBlur={handleSave}
+            onKeyDown={handleKeyDown} // Trigger save on Enter key
             className="ml-3 px-2 py-1 rounded-lg bg-gray-700 text-white outline-none"
           />
         ) : (
@@ -46,9 +55,15 @@ function ItemTodo({ todo, toggleComplete, deleteTodo, editTodo }) {
         )}
       </div>
       <div className="flex items-center space-x-2">
-        <button onClick={handleEdit} className="text-blue-400 hover:text-blue-600">
-          <FaEdit />
-        </button>
+        {isEditing ? (
+          <button onClick={handleSave} className="text-green-400 hover:text-green-600">
+            <FaSave />
+          </button>
+        ) : (
+          <button onClick={handleEdit} className="text-blue-400 hover:text-blue-600">
+            <FaEdit />
+          </button>
+        )}
         <button onClick={() => deleteTodo(todo.id)} className="text-red-500 hover:text-red-700">
           <FaTrash />
         </button>
@@ -57,4 +72,4 @@ function ItemTodo({ todo, toggleComplete, deleteTodo, editTodo }) {
   );
 }
 
-export default ItemTodo;
+export default TodoItem;
