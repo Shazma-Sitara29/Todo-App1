@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
+function ItemTodo({ todo, toggleComplete, deleteTodo, editTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(todo.text);
 
@@ -57,4 +57,4 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
   );
 }
 
-export default TodoItem;
+export default ItemTodo;
