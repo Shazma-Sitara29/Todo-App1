@@ -1,28 +1,39 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './Components/Navbar';
-import HeroSection from './Components/HeroSection';
-import AboutUs from './Components/About';
-import Services from './Components/Services';
-import ContactUs from './Components/Contact';
-import LoginForm from './Components/Login';
+import React, { useState } from "react";
+import TodoList from "./components/TodoList";
+import AddTodo from "./components/AddTodo";
 
-const App = () => {
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = (text) => {
+    const newTodo = { id: Date.now(), text, completed: false };
+    setTodos([newTodo, ...todos]);
+  };
+
+  const editTodo = (id, newText) => {
+    setTodos(todos.map(todo => todo.id === id ? { ...todo, text: newText } : todo));
+  };
+
+  const toggleComplete = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={
-          <>
-            <section id="hero"><HeroSection /></section>
-            <section id="about"><AboutUs /></section>
-            <section id="services"><Services /></section>
-            <section id="contact"><ContactUs /></section>
-          </>
-        } />
-        <Route path="/login" element={<LoginForm />} />
-      </Routes>
-    </Router>
+    <div className="min-h-screen bg-black flex items-center justify-center py-10">
+      <div className="w-full max-w-md bg-gray-900 rounded-lg p-6 shadow-lg">
+        <h1 className="text-3xl font-bold text-purple-400 text-center mb-6">TO-DO LIST</h1>
+        <AddTodo addTodo={addTodo} />
+        <TodoList todos={todos} toggleComplete={toggleComplete} deleteTodo={deleteTodo} editTodo={editTodo} />
+      </div>
+    </div>
   );
 }
 
